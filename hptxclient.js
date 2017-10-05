@@ -1,8 +1,8 @@
-var tmyData = require ('./data/tmy725033.js');
-
-var input = tmyData.dni;
-var sampleInput = input.slice(8, 17);
-console.log(sampleInput);
+var input = dni;
+var sampleInput = input.slice(0, 24);
+document.write("One Day DNI Sample <br>");
+document.write(sampleInput);
+document.write("<br>---------<br>");
 
 var applyLoss = function (inputArray, loss) {
   var output = inputArray.map( function(x) {
@@ -36,7 +36,9 @@ var runHptx = function (input) {
 }
 
 var output = runHptx(sampleInput);
-console.log(JSON.stringify(runHptx(sampleInput)));
+document.write("Sample Output <br>");
+document.write(JSON.stringify(runHptx(sampleInput)));
+document.write("<br>---------<br>");
 
 var ones = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
 var sumBy = function (inputArray, delta) {
@@ -50,4 +52,5 @@ var sumBy = function (inputArray, delta) {
 }
 
 var output = sumBy(input, 30*24);
-console.log(output);
+document.write("Sample Output Summed by Month <br>");
+document.write(output);

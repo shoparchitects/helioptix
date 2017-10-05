@@ -30,5 +30,4 @@ var runHptx = function (input) {
   return output;
 }
 
-
 console.log(runHptx(sampleInput));

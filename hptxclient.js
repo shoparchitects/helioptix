@@ -1,7 +1,7 @@
 var input = dni;
 var sampleInput = input.slice(0, 24);
 document.write("One Day DNI Sample <br>");
-document.write(sampleInput);
+document.write(JSON.stringify(sampleInput));
 document.write("<br>---------<br>");
 
 var applyLoss = function (inputArray, loss) {
@@ -51,6 +51,8 @@ var sumBy = function (inputArray, delta) {
   return outputArray;
 }
 
-var output = sumBy(input, 30*24);
+var output = sumBy(ones, 2);
+console.log('OUTPUT', output)
 document.write("Sample Output Summed by Month <br>");
-document.write(output);
+document.write(JSON.stringify(output));
+document.write("<br>---------<br>");

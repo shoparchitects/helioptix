@@ -49,5 +49,5 @@ var sumBy = function (inputArray, delta) {
   return outputArray;
 }
 
-var output = sumBy(input, 30*7);
+var output = sumBy(input, 30*24);
 console.log(output);

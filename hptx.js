@@ -10,5 +10,4 @@ var applyLoss = function (inputArray) {
   });
   return output;
 }
-
 console.log(applyLoss(sampleInput));

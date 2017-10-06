@@ -47,14 +47,14 @@ var sumBy = function (inputArray, delta) {
   for (var i=0; i<inputArray.length; i = i + delta) {
     var cut = inputArray.slice(i, i + delta);
     var sum = cut.reduce((a, b) => a + b, 0);
-    var periodSum = {"periodStart":i, "sum":sum};
+    var periodSum = {"barName":i, "sum":sum};
     outputArray.push(sum);
     outputArray2.push(periodSum);
   }
   return outputArray2;
 }
 
-var output = sumBy(ones, 2);
+var output = sumBy(input, 30*24);
 console.log('OUTPUT', output)
 document.getElementById('output').innerHTML += "Sample Output Summed by Month <br>";
 document.getElementById('output').innerHTML += JSON.stringify(output);
@@ -63,7 +63,7 @@ document.getElementById('output').innerHTML += "<br>---------<br>";
 var outputByMonth = sumBy(input, 30*24);
 //D3 Magic:
 var svg = d3.select("svg"),
-    margin = {top: 20, right: 20, bottom: 30, left: 40},
+    margin = {top: 120, right: 120, bottom: 130, left: 140},
     width = +svg.attr("width") - margin.left - margin.right,
     height = +svg.attr("height") - margin.top - margin.bottom;
 
@@ -73,7 +73,7 @@ var x = d3.scaleBand().rangeRound([0, width]).padding(0.1),
 var g = svg.append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-x.domain(outputByMonth.map(function(d) { return d.periodStart; }));
+x.domain(outputByMonth.map(function(d) { return d.barName; }));
 y.domain([0, d3.max(outputByMonth, function(d) { return d.sum; })]);
 
 g.append("g")
@@ -95,7 +95,7 @@ g.selectAll(".bar")
   .data(outputByMonth)
   .enter().append("rect")
     .attr("class", "bar")
-    .attr("x", function(d) { return x(d.periodStart); })
+    .attr("x", function(d) { return x(d.barName); })
     .attr("y", function(d) { return y(d.sum); })
     .attr("width", x.bandwidth())
     .attr("height", function(d) { return height - y(d.sum); });

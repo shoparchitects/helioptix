@@ -51,11 +51,13 @@ var sumBy = function (inputArray, delta) {
   var outputArray2 = [];
   for (var i=0; i<inputArray.length; i = i + delta) {
     var cut = inputArray.slice(i, i + delta);
+    var ogCut = input.slice(i, i + delta);
 
     var sum = cut.reduce((a, b) => a + b, 0);
+    var ogSum = ogCut.reduce((a, b) => a + b, 0);
     outputArray.push(sum);
 
-    var periodSum = {"barName":i, "sum":sum};
+    var periodSum = {"barName":i, "ogSum":ogSum, "sum":sum};
     outputArray2.push(periodSum);
   }
   return outputArray2;
@@ -102,10 +104,19 @@ g.append("g")
     .attr("text-anchor", "end")
     .text("Frequency");
 
-g.selectAll(".bar")
+g.selectAll(".dniBar")
   .data(outputByMonth)
   .enter().append("rect")
-    .attr("class", "bar")
+    .attr("class", "dniBar")
+    .attr("x", function(d) { return x(d.barName); })
+    .attr("y", function(d) { return y(d.ogSum); })
+    .attr("width", x.bandwidth())
+    .attr("height", function(d) { return height - y(d.ogSum); });
+
+g.selectAll(".outputBar")
+  .data(outputByMonth)
+  .enter().append("rect")
+    .attr("class", "outputBar")
     .attr("x", function(d) { return x(d.barName); })
     .attr("y", function(d) { return y(d.sum); })
     .attr("width", x.bandwidth())

@@ -45,22 +45,16 @@ document.getElementById('output').innerHTML += JSON.stringify(runHptx(sampleInpu
 document.getElementById('output').innerHTML += "<br>---------<br>";
 
 // Resulting output can be summed by different divisions, ex, weekly, monthy, etc...
-// outputArray and outputArray2 are just playing with different output formats.  Don't need both ultimately.
 var sumBy = function (inputArray, delta) {
   var outputArray = [];
-  var outputArray2 = [];
   for (var i=0; i<inputArray.length; i = i + delta) {
     var cut = inputArray.slice(i, i + delta);
-    var ogCut = input.slice(i, i + delta);
-
     var sum = cut.reduce((a, b) => a + b, 0);
-    var ogSum = ogCut.reduce((a, b) => a + b, 0);
-    outputArray.push(sum);
 
-    var periodSum = {"barName":i, "ogSum":ogSum, "sum":sum};
-    outputArray2.push(periodSum);
+    var periodSum = {"barName":i, "sum":sum};
+    outputArray.push(periodSum);
   }
-  return outputArray2;
+  return outputArray;
 }
 
 // Example of how to summarize input DNI monthly-ish
@@ -105,13 +99,13 @@ g.append("g")
     .text("Frequency");
 
 g.selectAll(".dniBar")
-  .data(outputByMonth)
+  .data(output)
   .enter().append("rect")
     .attr("class", "dniBar")
     .attr("x", function(d) { return x(d.barName); })
-    .attr("y", function(d) { return y(d.ogSum); })
+    .attr("y", function(d) { return y(d.sum); })
     .attr("width", x.bandwidth())
-    .attr("height", function(d) { return height - y(d.ogSum); });
+    .attr("height", function(d) { return height - y(d.sum); });
 
 g.selectAll(".outputBar")
   .data(outputByMonth)

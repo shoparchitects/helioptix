@@ -92,9 +92,18 @@ document.getElementById('output').innerHTML += "<br>---------<br>";
 var runScenario = runHptx(input);
 var outputByMonth = sumBy(runScenario, "monthly");
 
+// Example of how to run scenario and summaraize results
+
+var dniaoi = getAOIArray (input, lat, lng, hAngle, vAngle);
+var runScenario = input.map(function(_,i) {
+                    return input[i] * Math.cos(dniaoi[i] * Math.PI / 180);
+                  });
+
+var outputByMonth = sumBy(runScenario, "monthly");
+
 //D3 Magic:
 var svg = d3.select("svg"),
-    margin = {top: 120, right: 120, bottom: 130, left: 140},
+    margin = {top: 220, right: 120, bottom: 130, left: 140},
     width = +svg.attr("width") - margin.left - margin.right,
     height = +svg.attr("height") - margin.top - margin.bottom;
 

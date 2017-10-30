@@ -1,6 +1,6 @@
 function makeBarChart (thisData1, thisData2) {
   var svg = d3.select("#barChart"),
-      margin = {top: 220, right: 120, bottom: 130, left: 140},
+      margin = {top: 50, right: 120, bottom: 130, left: 140},
       width = +svg.attr("width") - margin.left - margin.right,
       height = +svg.attr("height") - margin.top - margin.bottom;
 
@@ -11,7 +11,7 @@ function makeBarChart (thisData1, thisData2) {
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
   x.domain(thisData2.map(function(d) { return d.barName; }));
-  y.domain([0, d3.max(thisData2, function(d) { return d.sum; })]);
+  y.domain([0, d3.max(thisData1, function(d) { return d.sum; })]);
 
   g.append("g")
       .attr("class", "axis axis--x")

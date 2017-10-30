@@ -1,22 +1,22 @@
-//var myData = require ('./data/tmy725033.js').dni;
+var myData = require ('./data/tmy725033.js').dni;
 
-// var month, day;
-// month = 7;
-// day = 8;
+var month, day;
+month = 7;
+day = 8;
 
 var lat, lng;
-lat = 40.71;
-lng = -74.01;
+lat = 32.73;
+lng = -117.17;
 var testFlag = true;
 var hAngle, vAngle; //position
-hAngle = 0; vAngle = 40.71;
+hAngle = 0; vAngle = 0;
 
-// var t0 = new Date().getTime();
-// var runAOI = getAOIArray(myData, lat, lng, hAngle, vAngle);
-// var t1 = new Date().getTime();
-// if (testFlag) {
-//   console.log("Execution Time " + (t1 - t0) + " milliseconds.");
-// }
+var t0 = new Date().getTime();
+var runAOI = getAOIArray(myData, lat, lng, hAngle, vAngle);
+var t1 = new Date().getTime();
+if (testFlag) {
+  console.log("Execution Time " + (t1 - t0) + " milliseconds.");
+}
 
 function getAOIArray (myData, lat, lng, hAngle, vAngle) {
   var AOIArray = myData.map( function(x, i) {

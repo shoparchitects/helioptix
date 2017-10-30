@@ -1,54 +1,37 @@
 <html>
 
   <head>
-
-    <!-- D3 Styling... -->
-    <style>
-      .outputBar {
-        fill: darkorange;
-      }
-
-      .dniBar {
-        fill: darkgreen;
-      }
-
-      .outputBar:hover {
-        fill: orange;
-      }
-
-      .dniBar:hover {
-        fill: green;
-      }
-
-      .axis--x path {
-        display: none;
-      }
-
-      .arc text {
-        font: 10px sans-serif;
-        text-anchor: middle;
-      }
-
-      .arc path {
-        stroke: #fff;
-      }
-
-    </style>
-
+    <link rel = "stylesheet" type = "text/css" href = "styles.css" />
   </head>
 
   <body>
 
+    <div id="controls">
+      Inclination: <input type="number" id="ctrlVER" value="40.71" min="0" max="90" onchange="calcPage()"/>
+      Orientation: <input type="number" id="ctrlHOR" value="0" min="-90" max="90" onchange="calcPage()"/>
+      <br><br><br>
+    </div>
     <div id="output"></div>
     <svg id="barChart" width="960" height="500"></svg>
     <svg id="pieChart" width="960" height="500"></svg>
 
   </body>
 
+  <!--Data-->
   <script src="./data/tmy725033Client.js"></script>
-  <script src="./data/data2.js"></script>
+
+  <!--Should try to load these in the order they'll be needed.
+  ie, samplePage.js refers to functions from previous, so they should already be loaded)-->
   <script src="./js/d3.min.js"></script>
-  <script src="./sunpathClient.js"></script>
-  <script src="./hptxClient.js"></script>
+  <script src="./commonThings.js"></script>
+  <script src="./colorSchemes.js"></script>
+  <script src="./d3BarChart.js"></script>
+  <script src="./d3PieChart.js"></script>
+  <script src="./sunpath.js"></script>
+  <script src="./helioptix.js"></script>
+
+  <script src="./scenario.js"></script>
+  <script src="./samplePage.js"></script>
+  <script>calcPage();</script>
 
 </html>

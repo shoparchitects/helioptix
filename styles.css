@@ -1,0 +1,28 @@
+.outputBar {
+  fill: darkorange;
+}
+
+.dniBar {
+  fill: darkgreen;
+}
+
+.outputBar:hover {
+  fill: orange;
+}
+
+.dniBar:hover {
+  fill: green;
+}
+
+.axis--x path {
+  display: none;
+}
+
+.arc text {
+  font: 10px sans-serif;
+  text-anchor: middle;
+}
+
+.arc path {
+  stroke: #fff;
+}

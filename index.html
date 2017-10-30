@@ -23,6 +23,16 @@
       .axis--x path {
         display: none;
       }
+
+      .arc text {
+        font: 10px sans-serif;
+        text-anchor: middle;
+      }
+
+      .arc path {
+        stroke: #fff;
+      }
+
     </style>
 
   </head>
@@ -30,11 +40,13 @@
   <body>
 
     <div id="output"></div>
-    <svg width="960" height="500"></svg>
+    <svg id="barChart" width="960" height="500"></svg>
+    <svg id="pieChart" width="960" height="500"></svg>
 
   </body>
 
   <script src="./data/tmy725033Client.js"></script>
+  <script src="./data/data2.js"></script>
   <script src="./js/d3.min.js"></script>
   <script src="./sunpathClient.js"></script>
   <script src="./hptxClient.js"></script>

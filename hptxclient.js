@@ -29,15 +29,15 @@ var applyLoss = function (inputArray, loss) {
 
 // Example loss functions
 var loss1 = function (x) {
-  return x * 0.9;
+  return x * 0.75;
 }
 
 var loss2 = function (x) {
-  return x * 0.9;
+  return x * 0.75;
 }
 
 var loss3 = function (x) {
-  return x * 0.9;
+  return x * 0.75;
 }
 
 var round = function (x) {
@@ -65,6 +65,8 @@ var sumBy = function (inputArray, increment) {
   if (increment == "monthly") {
     delta = 31 * 24;
     var mJ = 0;
+  } else {
+    delta = increment;
   }
   for (var i=0; i<inputArray.length; i = i + delta) {
     if (increment == "monthly") {
@@ -83,7 +85,6 @@ var sumBy = function (inputArray, increment) {
 
 // Example of how to summarize input DNI monthly-ish
 var output = sumBy(input, "monthly");
-//console.log('OUTPUT', output)
 document.getElementById('output').innerHTML += "Sample Output Summed by Month <br>";
 document.getElementById('output').innerHTML += JSON.stringify(output);
 document.getElementById('output').innerHTML += "<br>---------<br>";
@@ -91,6 +92,19 @@ document.getElementById('output').innerHTML += "<br>---------<br>";
 // Example of how to run scenario and summaraize results
 var runScenario = runHptx(input);
 var outputByMonth = sumBy(runScenario, "monthly");
+
+// Full Year
+var annualDNI = sumBy(input, 8760); //DNI Summed by Year
+var dniaoi = getAOIArray (input, lat, lng, hAngle, vAngle); //Run 8760 AOA calc
+var runAngleLoss = input.map(function(_,i) {
+                    return input[i] * Math.cos(dniaoi[i] * Math.PI / 180);
+                  }); //DNI * AOA
+var annualAngleLoss = sumBy(runAngleLoss, 8760); // DNI * AOA Summed by year
+var annualDNIdiff = annualDNI[0].sum - annualAngleLoss[0].sum; // DNI - DNIAOI (For pie chart formatting)
+var hptxScenario = runHptx(runAngleLoss); // Apply HPTX losses to DNIAOI
+var annualHptxScenario = sumBy(hptxScenario, 8760); //Sum HPTX losses by year
+var annualHPTXdiff = annualAngleLoss[0].sum - annualHptxScenario[0].sum; // DNIAOI - HPTX (For pie chart formatting)
+var annualPie = [{"age":"TMY3 DNI", "population":annualDNIdiff},{"age":"PLANE LIMITED DNI", "population":annualHPTXdiff}, {"age":"HPTX", "population":annualHptxScenario[0].sum}];
 
 // Example of how to run scenario and summaraize results
 
@@ -102,7 +116,7 @@ var runScenario = input.map(function(_,i) {
 var outputByMonth = sumBy(runScenario, "monthly");
 
 //D3 Magic:
-var svg = d3.select("svg"),
+var svg = d3.select("#barChart"),
     margin = {top: 220, right: 120, bottom: 130, left: 140},
     width = +svg.attr("width") - margin.left - margin.right,
     height = +svg.attr("height") - margin.top - margin.bottom;
@@ -148,3 +162,41 @@ g.selectAll(".outputBar")
     .attr("y", function(d) { return y(d.sum); })
     .attr("width", x.bandwidth())
     .attr("height", function(d) { return height - y(d.sum); });
+
+/*---------*/
+
+//var pieData = thisDataset;
+var pieData = annualPie;
+var svg1 = d3.select("#pieChart"),
+    width = +svg1.attr("width"),
+    height = +svg1.attr("height"),
+    radius = Math.min(width, height) / 2,
+    g = svg1.append("g").attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+var color = d3.scaleOrdinal(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+
+var pie = d3.pie()
+    .sort(null)
+    .value(function(d) { return d.population; });
+
+var path = d3.arc()
+    .outerRadius(radius - 10)
+    .innerRadius(0);
+
+var label = d3.arc()
+    .outerRadius(radius - 40)
+    .innerRadius(radius - 40);
+
+var arc = g.selectAll(".arc")
+  .data(pie(pieData))
+  .enter().append("g")
+    .attr("class", "arc");
+
+arc.append("path")
+    .attr("d", path)
+    .attr("fill", function(d) { return color(d.index); });
+
+arc.append("text")
+    .attr("transform", function(d) { return "translate(" + label.centroid(d) + ")"; })
+    .attr("dy", "0.35em")
+    .text(function(d) { return d.data.age; });

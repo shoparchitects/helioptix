@@ -7,8 +7,8 @@
   <body>
 
     <div id="controls">
-      Inclination: <input type="number" id="ctrlVER" value="40.71" min="0" max="90" onchange="calcPage()"/>
-      Orientation: <input type="number" id="ctrlHOR" value="0" min="-90" max="90" onchange="calcPage()"/>
+      Inclination: <input type="range" id="ctrlVER" value="40.71" min="0" max="90" oninput="calcPage()" onchange="calcPage()" orient="vertical"/>
+      Orientation: <input type="range" id="ctrlHOR" value="0" min="-90" max="90" oninput="calcPage()" onchange="calcPage()"/>
       <br><br><br>
     </div>
     <div id="output"></div>

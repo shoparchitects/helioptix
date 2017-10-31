@@ -12,8 +12,12 @@ function calcPage () {
     document.getElementById('output').innerHTML = "";
     document.getElementById('barChart').innerHTML = "";
     document.getElementById('pieChart').innerHTML = "";
-    lat = document.getElementById("ctrlVER").value;
-    lng = document.getElementById("ctrlHOR").value;
+    vAngle = document.getElementById("ctrlVER").value;
+    hAngle = document.getElementById("ctrlHOR").value;
+    var incLine = document.getElementById('incLine');
+    incLine.setAttribute('transform', "rotate(" + vAngle + " 100 100)");
+    var horLine = document.getElementById('horLine');
+    horLine.setAttribute('transform', "rotate(" + hAngle + " 200 100)");
 
   // 1 - Example of a single day of DNI
     var sampleInput = input.slice(0, 24);

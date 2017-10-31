@@ -7,8 +7,18 @@
   <body>
 
     <div id="controls">
-      Inclination: <input type="range" id="ctrlVER" value="40.71" min="0" max="90" oninput="calcPage()" onchange="calcPage()" orient="vertical"/>
-      Orientation: <input type="range" id="ctrlHOR" value="0" min="-90" max="90" oninput="calcPage()" onchange="calcPage()"/>
+      Inclination (0-90): <input type="range" id="ctrlVER" value="40.71" min="0" max="90" oninput="calcPage()" onchange="calcPage()" orient="vertical"/>
+      <svg width="300" height="200">
+        <g id="incLine" stroke="steelblue" stroke-width="5" stroke-linecap="round" transform="rotate(-40.71 100 100)">
+          <line x1="100" y1="75" x2="100" y2="125" />
+          <line x1="90" y1="100" x2="100" y2="100" />
+        </g>
+        <g id="horLine" stroke="red" stroke-width="5" stroke-linecap="round">
+          <line x1="175" y1="100" x2="225" y2="100"/>
+          <line x1="200" y1="90" x2="200" y2="100"/>
+        </g>
+      </svg>
+      Orientation: -90 (E) <input type="range" id="ctrlHOR" value="0" min="-90" max="90" oninput="calcPage()" onchange="calcPage()"/>90 (W)
       <br><br><br>
     </div>
     <div id="output"></div>

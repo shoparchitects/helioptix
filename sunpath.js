@@ -44,7 +44,7 @@ function getHour (i) {
 }
 
 function getDeclination (dayNo) {
-  return 23.45 * Math.sin( ( 360 * ( ( 284 + dayNo ) / 365 ) ) * Math.PI / 180 )
+  return 23.45 * Math.PI / 180 * Math.sin( 360 * ( 284 + dayNo ) / 365 * Math.PI / 180 )
 }
 
 function getB (dayNo) {
@@ -95,11 +95,11 @@ function getAzimuth (alt, uHourAngle, uDec) {
 }
 
 function getAOI (lat, uHourAngle, uDec, altOff, aziOff, thisAlt, thisAzi) {
-  var effectiveAlt = thisAlt - altOff;
-  var effectiveAzi = thisAzi - aziOff;
+  //var effectiveAlt = thisAlt - altOff;
+  //var effectiveAzi = thisAzi - aziOff;
 
-  var altLimited = (thisAlt <=0 ? 0 : (-90 < effectiveAlt && effectiveAlt < 90) ? effectiveAlt : 0 );
-  var aziLimited = (-90 < effectiveAzi && effectiveAzi < 90) ? effectiveAzi : 0;
+  //var altLimited = (thisAlt <=0 ? 0 : (-90 < effectiveAlt && effectiveAlt < 90) ? effectiveAlt : 0 );
+  //var aziLimited = (-90 < effectiveAzi && effectiveAzi < 90) ? effectiveAzi : 0;
 
   var AOI = Math.acos(
     (
@@ -139,7 +139,7 @@ function getAOI (lat, uHourAngle, uDec, altOff, aziOff, thisAlt, thisAzi) {
     )
   ) * 180 / Math.PI;
 
-  if (altLimited == 0 || aziLimited == 0) {
+  if (AOI >= 90 || thisAlt <= 0) {
     return 90;
   }
   else {
